@@ -7,7 +7,7 @@ import './helpers/external_links.js';
 // All stuff below is just to show you how it works. You can delete all of it.
 import { remote } from 'electron';
 import jetpack from 'fs-jetpack';
-import { greet } from './hello_world/hello_world';
+import { greet, gitVersion } from './hello_world/hello_world';
 import env from './env';
 
 const app = remote.app;
@@ -28,3 +28,8 @@ document.querySelector('#os').innerHTML = osMap[process.platform];
 document.querySelector('#author').innerHTML = manifest.author;
 document.querySelector('#env').innerHTML = env.name;
 document.querySelector('#electron-version').innerHTML = process.versions.electron;
+gitVersion().then(version => {
+  document.querySelector('#dugite-git-version').innerHTML = version;
+}).catch((error) => {
+  document.querySelector('#dugite-git-version').innerHTML = `Error when getting dugite Git version: ${error.message}`;
+})
